@@ -1,11 +1,7 @@
 # Create class for freight trucks
 class Truck:
-    def __init__(self, capacity, speed, load, packages, mileage, address, depart_time):
-        self.capacity = capacity
-        self.speed = speed
-        self.load = load
+    def __init__(self, packages, mileage, current_location, current_time):
         self.packages = packages
         self.mileage = mileage
-        self.address = address
-        self.depart_time = depart_time
-        self.time = depart_time
+        self.current_location = current_location
+        self.current_time = current_time

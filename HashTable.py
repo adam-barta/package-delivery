@@ -11,7 +11,7 @@ class HashTable:
             self.table.append([])
 
     # Inserts a new item into the hash table.
-    def insert(self, key, item):  #  does both insert and update
+    def insert(self, key, item):  # does both insert and update
         # get the bucket list where this item will go.
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
