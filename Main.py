@@ -49,7 +49,10 @@ def extract_address(address):
 def distance_between(address1, address2):
     address1_index = extract_address(address1)
     address2_index = extract_address(address2)
-    return distance_csv[address1_index][address2_index]
+    distance =  distance_csv[address1_index][address2_index]
+    if distance == '':
+        distance = distance_csv[address2_index][address1_index]
+    return float(distance)
 
 
 # Algorithm to deliver packages and update package and truck status
@@ -74,11 +77,11 @@ def deliver_packages(truck):
                 closest_package = package
 
         truck.mileage += min_distance
-        truck.current_time += (min_distance / truck_speed)
+        truck.current_time += datetime.timedelta(hours=min_distance / truck_speed)
         closest_package.delivery_time = truck.current_time
         closest_package.delivery_status = "Delivered"
         truck.current_location = closest_package.address
-        truck.packages.remove(closest_package.ID)
+        truck.packages.remove(closest_package.pid)
 
 
 # Create hash table instance
