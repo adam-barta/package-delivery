@@ -49,7 +49,7 @@ def extract_address(address):
 def distance_between(address1, address2):
     address1_index = extract_address(address1)
     address2_index = extract_address(address2)
-    distance =  distance_csv[address1_index][address2_index]
+    distance = distance_csv[address1_index][address2_index]
     if distance == '':
         distance = distance_csv[address2_index][address1_index]
     return float(distance)
@@ -92,5 +92,11 @@ load_package_data(package_csv, package_hash_table)
 
 # Create truck instance truck1
 # Create truck instance truck1
-truck1 = Truck([2, 4, 5], 0.0, "4001 South 700 East", datetime.timedelta(hours=8))
+truck1 = Truck([], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
+truck2 = Truck([3, 18, 36, 38], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
+truck3 = Truck([], 0.0, "4001 South 700 East", datetime.timedelta(hours=8, minutes=0))
+
+
 deliver_packages(truck1)
+deliver_packages(truck2)
+deliver_packages(truck3)
