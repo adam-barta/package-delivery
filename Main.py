@@ -100,3 +100,16 @@ truck3 = Truck([], 0.0, "4001 South 700 East", datetime.timedelta(hours=8, minut
 deliver_packages(truck1)
 deliver_packages(truck2)
 deliver_packages(truck3)
+
+# Iterate through all buckets and print package details
+for bucket in package_hash_table.table:
+    for key, package in bucket:
+        print(f"Package ID: {key}")
+        print(f"  Address: {package.address}")
+        print(f"  City: {package.city}")
+        print(f"  State: {package.state}")
+        print(f"  Zipcode: {package.zipcode}")
+        print(f"  Deadline: {package.deadline_time}")
+        print(f"  Weight: {package.weight}")
+        print(f"  Status: {package.status}")
+        print("---")  # Separator between packages
