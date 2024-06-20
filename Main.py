@@ -112,53 +112,47 @@ deliver_packages(truck3)
 
 class Main:
     # Code for UI
-    print("Welcome to the Western Governors University Parcel Service (WGUPS)")
+    # ascii art from https://ascii-generator.site/
+    title = ''' __      __    ________   ____ ___  __________    _________ 
+/  \    /  \  /  _____/  |    |   \ \______   \  /   _____/ 
+\   \/\/   / /   \  ___  |    |   /  |     ___/  \_____  \  
+ \        /  \    \_\  \ |    |  /   |    |      /        \ 
+  \__/\  /    \______  / |______/    |____|     /_______  / 
+       \/            \/                                 \/'''
+    print(title)
+    print("Welcome to the Western Governors University Parcel Service")
     print(f"Mileage for current route is {truck1.mileage + truck2.mileage + truck3.mileage}")
-    text = input("Enter 'time' to view available options or any other key to quit: ")
 
-    # If the user doesn't type "leave" the program will ask for a specific time in regard to checking packages
-    if text == "time":
+    while True:
         try:
-            while True:
-                try:
-                    user_time = input("Enter a time to check status (Format: HH:MM:SS) or 'exit' to exit: ")
-                    if user_time == "exit":
-                        exit()
-                    (h, m, s) = user_time.split(":")
-                    user_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
-                    break
-                except ValueError:
-                    print("Invalid time format. Please enter HH:MM:SS or 'exit': ")
-
-            # The user will be asked if they want to see the status of all packages or only one
-            text = input("To view the status of an individual package please type '1'. For status of all "
-                         "packages please type '2': ")
-            # If the user enters "solo" the program will ask for one package ID
-            if text == "1":
-                try:
-                    # The user will be asked to input a package ID. Invalid entry will cause the program to quit
-                    solo_input = input("Enter the numeric package ID: ")
-                    package = package_hash_table.search(int(solo_input))
-                    package.check_status(user_time)
-                    print(str(package))
-                except ValueError:
-                    print("Invalid entry")
-                    exit()
-            # If the user types "all" the program will display all package information at once
-            elif text == "2":
-                try:
-                    for packageID in range(1, 41):
-                        package = package_hash_table.search(packageID)
-                        package.check_status(user_time)
-                        print(str(package))
-                except ValueError:
-                    print("Invalid entry")
-                    exit()
-            else:
+            user_time = input("Enter a time to check status (Format: HH:MM:SS) or 'exit' to exit: ")
+            if user_time == "exit":
                 exit()
+            (h, m, s) = user_time.split(":")
+            user_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+            break
+        except ValueError:
+            print("Invalid time format, please try again.")
+
+    text = input("To view status of a single package type '1'. For status of all packages type '2': ")
+
+    if text == "1":
+        try:
+            solo_input = input("Enter package ID: ")
+            package = package_hash_table.search(int(solo_input))
+            package.check_status(user_time)
+            print(str(package))
         except ValueError:
             print("Invalid entry")
             exit()
-    elif input != "time":
-        print("Invalid entry")
+    elif text == "2":
+        try:
+            for packageID in range(1, 41):
+                package = package_hash_table.search(packageID)
+                package.check_status(user_time)
+                print(str(package))
+        except ValueError:
+            print("Invalid entry")
+            exit()
+    else:
         exit()
