@@ -97,8 +97,7 @@ package_hash_table = HashTable()
 # Load packages into hash table
 load_package_data(package_csv, package_hash_table)
 
-# Create truck instance truck1
-# Create truck instance truck1
+# Create truck instances
 truck1 = Truck([1, 2, 4, 5, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 0.0,
                "4001 South 700 East", datetime.timedelta(hours=8, minutes=0))
 truck2 = Truck([3, 6, 7, 8, 10, 11, 12, 17, 18, 21, 22, 28, 32, 36, 38], 0.0,
@@ -110,25 +109,56 @@ deliver_packages(truck1)
 deliver_packages(truck2)
 deliver_packages(truck3)
 
-# Iterate through all buckets and print package details
-for bucket in package_hash_table.table:
-    for key, package in bucket:
-        print(f"Package ID: {key}")
-        # print(f"  Address: {package.address}")
-        # print(f"  City: {package.city}")
-        # print(f"  State: {package.state}")
-        # print(f"  Zipcode: {package.zipcode}")
-        # print(f"  Weight: {package.weight}")
-        # print(f"  Status: {package.status}")
-        print(f"  Delivery time: {package.delivery_time}")
-        print(f"  Deadline: {package.deadline_time}")
-        # print(f"  Time left hub: {package.time_left_hub}")
-        print("---")  # Separator between packages
 
-print(str(truck1))
-print(str(truck2))
-print(str(truck3))
+class Main:
+    # Code for UI
+    print("Welcome to the Western Governors University Parcel Service (WGUPS)")
+    print(f"Mileage for current route is {truck1.mileage + truck2.mileage + truck3.mileage}")
+    text = input("Enter 'time' to view available options or any other key to quit: ")
 
-print(f"Mileage is {truck1.mileage + truck2.mileage + truck3.mileage}")
+    # If the user doesn't type "leave" the program will ask for a specific time in regard to checking packages
+    if text == "time":
+        try:
+            while True:
+                try:
+                    user_time = input("Enter a time to check status (Format: HH:MM:SS) or 'exit' to exit: ")
+                    if user_time == "exit":
+                        exit()
+                    (h, m, s) = user_time.split(":")
+                    user_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+                    break
+                except ValueError:
+                    print("Invalid time format. Please enter HH:MM:SS or 'exit': ")
 
-# TODO - Write code for UI
+            # The user will be asked if they want to see the status of all packages or only one
+            text = input("To view the status of an individual package please type '1'. For status of all "
+                         "packages please type '2': ")
+            # If the user enters "solo" the program will ask for one package ID
+            if text == "1":
+                try:
+                    # The user will be asked to input a package ID. Invalid entry will cause the program to quit
+                    solo_input = input("Enter the numeric package ID: ")
+                    package = package_hash_table.search(int(solo_input))
+                    package.check_status(user_time)
+                    print(str(package))
+                except ValueError:
+                    print("Invalid entry")
+                    exit()
+            # If the user types "all" the program will display all package information at once
+            elif text == "2":
+                try:
+                    for packageID in range(1, 41):
+                        package = package_hash_table.search(packageID)
+                        package.check_status(user_time)
+                        print(str(package))
+                except ValueError:
+                    print("Invalid entry")
+                    exit()
+            else:
+                exit()
+        except ValueError:
+            print("Invalid entry")
+            exit()
+    elif input != "time":
+        print("Invalid entry")
+        exit()
