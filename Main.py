@@ -79,9 +79,11 @@ def deliver_packages(truck):
         truck.mileage += min_distance
         truck.current_time += datetime.timedelta(hours=min_distance / truck_speed)
         closest_package.delivery_time = truck.current_time
-        closest_package.delivery_status = "Delivered"
+        closest_package.status = "Delivered"
         truck.current_location = closest_package.address
         truck.packages.remove(closest_package.pid)
+
+    # TODO - Insert logic to add distance and time to hub to truck object after all packages are delivered.
 
 
 # Create hash table instance
@@ -92,9 +94,9 @@ load_package_data(package_csv, package_hash_table)
 
 # Create truck instance truck1
 # Create truck instance truck1
-truck1 = Truck([], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
-truck2 = Truck([3, 18, 36, 38], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
-truck3 = Truck([], 0.0, "4001 South 700 East", datetime.timedelta(hours=8, minutes=0))
+truck1 = Truck([1, 2, 4, 5, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 0.0, "4001 South 700 East", datetime.timedelta(hours=8, minutes=0))
+truck2 = Truck([3, 6, 7, 8, 10, 11, 12, 17, 18, 21, 22, 25, 28, 32, 36, 38], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
+truck3 = Truck([9, 23, 24, 26, 27, 33, 35, 39], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
 
 
 deliver_packages(truck1)
@@ -105,11 +107,20 @@ deliver_packages(truck3)
 for bucket in package_hash_table.table:
     for key, package in bucket:
         print(f"Package ID: {key}")
-        print(f"  Address: {package.address}")
-        print(f"  City: {package.city}")
-        print(f"  State: {package.state}")
-        print(f"  Zipcode: {package.zipcode}")
-        print(f"  Deadline: {package.deadline_time}")
-        print(f"  Weight: {package.weight}")
+        # print(f"  Address: {package.address}")
+        # print(f"  City: {package.city}")
+        # print(f"  State: {package.state}")
+        # print(f"  Zipcode: {package.zipcode}")
+        # print(f"  Weight: {package.weight}")
         print(f"  Status: {package.status}")
+        print(f"  Delivery time: {package.delivery_time}")
+        print(f"  Deadline: {package.deadline_time}")
         print("---")  # Separator between packages
+
+print(str(truck1))
+print(str(truck2))
+print(str(truck3))
+
+print(f"Mileage is {truck1.mileage + truck2.mileage + truck3.mileage}")
+
+# TODO - Write code for UI
