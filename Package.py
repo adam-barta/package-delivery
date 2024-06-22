@@ -2,6 +2,7 @@ import datetime
 
 
 class Package:
+    # Package object constructor
     def __init__(self, pid, address, city, state, zipcode, deadline_time, weight, status):
         self.pid = pid
         self.address = address
@@ -14,6 +15,7 @@ class Package:
         self.time_left_hub = None
         self.delivery_time = None
 
+    # String method for printing package status
     def __str__(self):
         # Build the string with package details
         package_string = f"Package ID: {self.pid}\n"
@@ -29,6 +31,7 @@ class Package:
         package_string += "---\n"
         return package_string
 
+    # Method to check status of packages based on current_time.
     def check_status(self, current_time):
         if self.time_left_hub > current_time:
             self.status = "At Hub"
@@ -39,6 +42,7 @@ class Package:
             self.delivery_time = None
         else:
             self.status = "Delivered"
+        # Logic to print correct address of package #9 depending on current time
         if self.pid == 9:
             if current_time > datetime.timedelta(seconds=37200):
                 self.address = "410 S. State St"

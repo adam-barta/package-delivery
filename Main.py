@@ -30,9 +30,10 @@ def load_package_data(package_data, package_table):
         weight = package[6]
         status = "At hub"
 
+        # Create package objects
         p = Package(pid, address, city, state, zipcode, deadline_time, weight, status)
 
-        # Insert data into hash table
+        # Insert package objects into hash table
         package_table.insert(pid, p)
 
 
@@ -44,8 +45,7 @@ def extract_address(address):
 
 
 # Find distance between two addresses
-# def distance_between(address1, address2):
-#     return float(distance_csv[address1][address2])
+
 def distance_between(address1, address2):
     address1_index = extract_address(address1)
     address2_index = extract_address(address2)
@@ -64,10 +64,12 @@ def deliver_packages(truck):
         package = package_hash_table.search(packageID)
         package.time_left_hub = truck.current_time
 
+    # Loop until truck is empty
     while len(truck.packages) > 0:
         min_distance = 2000  # miles
         closest_package = None
 
+        # Loop through all package on truck and find min_distance (i.e. nearest neighbor)
         for packageID in truck.packages:
             package = package_hash_table.search(packageID)
             truck_location = truck.current_location
@@ -78,6 +80,7 @@ def deliver_packages(truck):
                 min_distance = distance
                 closest_package = package
 
+        # Update truck mileage, time and status. Update package status and remove from truck
         truck.mileage += min_distance
         truck.current_time += datetime.timedelta(hours=min_distance / truck_speed)
         closest_package.delivery_time = truck.current_time
@@ -85,7 +88,7 @@ def deliver_packages(truck):
         truck.current_location = closest_package.address
         truck.packages.remove(closest_package.pid)
 
-    # Add distance and time to hub to truck object after all packages are delivered.
+    # Add distance and time to hub to truck after all packages are delivered.
     distance_to_hub = distance_between(truck.current_location, "4001 South 700 East")
     truck.mileage += distance_to_hub
     truck.current_time += datetime.timedelta(hours=distance_to_hub / truck_speed)
@@ -105,6 +108,7 @@ truck2 = Truck([3, 6, 7, 8, 10, 11, 12, 17, 18, 21, 22, 28, 32, 36, 38], 0.0,
 truck3 = Truck([9, 23, 24, 25, 26, 27, 33, 35, 39], 0.0,
                "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
 
+# Call delivery algorithm
 deliver_packages(truck1)
 deliver_packages(truck2)
 deliver_packages(truck3)
@@ -112,7 +116,7 @@ deliver_packages(truck3)
 
 class Main:
     # Code for UI
-    # ascii art from https://ascii-generator.site/
+    # Source: ASCII art from https://ascii-generator.site/
     title = ''' __      __    ________   ____ ___  __________    _________ 
 /  \    /  \  /  _____/  |    |   \ \______   \  /   _____/ 
 \   \/\/   / /   \  ___  |    |   /  |     ___/  \_____  \  
@@ -123,6 +127,7 @@ class Main:
     print("Welcome to the Western Governors University Parcel Service")
     print(f"Mileage for current route is {truck1.mileage + truck2.mileage + truck3.mileage}")
 
+    # Loop until valid time or exit from program is input
     while True:
         try:
             user_time = input("Enter a time to check status (Format: HH:MM:SS) or 'exit' to exit: ")
@@ -134,8 +139,8 @@ class Main:
         except ValueError:
             print("Invalid time format, please try again.")
 
+    # Display all or single package status
     text = input("To view status of a single package type '1'. For status of all packages type '2': ")
-
     if text == "1":
         try:
             solo_input = input("Enter package ID: ")
