@@ -108,6 +108,13 @@ truck2 = Truck([3, 6, 7, 8, 10, 11, 12, 17, 18, 21, 22, 28, 32, 36, 38], 0.0,
 truck3 = Truck([9, 23, 24, 25, 26, 27, 33, 35, 39], 0.0,
                "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
 
+# Correct package #9 address
+package9 = package_hash_table.search(9)
+package9.address = "410 S State St"
+package9.city = "Salt Lake City"
+package9.state = "UT"
+package9.zipcode = "84111"
+
 # Call delivery algorithm
 deliver_packages(truck1)
 deliver_packages(truck2)

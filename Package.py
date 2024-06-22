@@ -44,8 +44,8 @@ class Package:
             self.status = "Delivered"
         # Logic to print correct address of package #9 depending on current time
         if self.pid == 9:
-            if current_time > datetime.timedelta(seconds=37200):
-                self.address = "410 S. State St"
+            if current_time < datetime.timedelta(seconds=37200):
+                self.address = "300 State St"
                 self.city = "Salt Lake City"
                 self.state = "UT"
-                self.zipcode = "84111"
+                self.zipcode = "84103"
