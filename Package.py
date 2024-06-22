@@ -1,3 +1,6 @@
+import datetime
+
+
 class Package:
     def __init__(self, pid, address, city, state, zipcode, deadline_time, weight, status):
         self.pid = pid
@@ -27,9 +30,18 @@ class Package:
         return package_string
 
     def check_status(self, current_time):
-        if self.delivery_time < current_time:
-            self.status = "Delivered"
-        elif self.time_left_hub > current_time:
-            self.status = "En route"
-        else:
+        if self.time_left_hub > current_time:
             self.status = "At Hub"
+            self.delivery_time = None
+            self.time_left_hub = None
+        elif self.delivery_time > current_time:
+            self.status = "En route"
+            self.delivery_time = None
+        else:
+            self.status = "Delivered"
+        if self.pid == 9:
+            if current_time > datetime.timedelta(seconds=37200):
+                self.address = "410 S. State St"
+                self.city = "Salt Lake City"
+                self.state = "UT"
+                self.zipcode = "84111"
