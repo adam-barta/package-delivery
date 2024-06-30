@@ -133,7 +133,10 @@ class Main:
        \/            \/                                 \/'''
     print(title)
     print("Welcome to the Western Governors University Parcel Service")
-    print(f"Mileage for current route is {truck1.mileage + truck2.mileage + truck3.mileage}")
+    print(f"Mileage for truck 1 is {truck1.mileage} mi.")
+    print(f"Mileage for truck 2 is {truck2.mileage} mi.")
+    print(f"Mileage for truck 3 is {truck3.mileage} mi.")
+    print(f"Total mileage for current route is {truck1.mileage + truck2.mileage + truck3.mileage} mi.")
 
     # Loop until valid time or exit from program is input
     while True:
