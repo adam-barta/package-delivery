@@ -14,6 +14,7 @@ class Package:
         self.status = status
         self.time_left_hub = None
         self.delivery_time = None
+        self.truck = None
 
     # String method for printing package status
     def __str__(self):
@@ -24,6 +25,7 @@ class Package:
         package_string += f"  State: {self.state}\n"
         package_string += f"  Zipcode: {self.zipcode}\n"
         package_string += f"  Weight: {self.weight}\n"
+        package_string += f"  Truck: {self.truck}\n"
         package_string += f"  Status: {self.status}\n"
         package_string += f"  Time left hub: {self.time_left_hub}\n"
         package_string += f"  Delivery time: {self.delivery_time}\n"

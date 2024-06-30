@@ -64,6 +64,7 @@ def deliver_packages(truck):
     for packageID in truck.packages:
         package = package_hash_table.search(packageID)
         package.time_left_hub = truck.current_time
+        package.truck = truck.truck_name
 
     # Loop until truck is empty
     while len(truck.packages) > 0:
@@ -102,11 +103,11 @@ package_hash_table = HashTable()
 load_package_data(package_csv, package_hash_table)
 
 # Create truck instances
-truck1 = Truck([1, 2, 4, 5, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 0.0,
+truck1 = Truck("Truck 1", [1, 2, 4, 5, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 0.0,
                "4001 South 700 East", datetime.timedelta(hours=8, minutes=0))
-truck2 = Truck([3, 6, 17, 18, 21, 22, 25, 28, 32, 36, 38], 0.0,
+truck2 = Truck("Truck 2", [3, 6, 17, 18, 21, 22, 25, 28, 32, 36, 38], 0.0,
                "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
-truck3 = Truck([7, 8, 9, 10, 11, 12, 23, 24, 26, 27, 33, 35, 39], 0.0,
+truck3 = Truck("Truck 3", [7, 8, 9, 10, 11, 12, 23, 24, 26, 27, 33, 35, 39], 0.0,
                "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
 
 # Correct package #9 address
